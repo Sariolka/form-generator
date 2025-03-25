@@ -1,0 +1,39 @@
+/* Rawline 400 */
+@font-face {
+  font-family: 'Rawline';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src:
+    local(Rawline-400),
+    url('../fonts/Rawline-400.woff2') format('woff2'),
+    local(Rawline-400),
+    url('../fonts/Rawline-400.woff') format('woff');
+}
+
+/*!* Rawline 500 *!*/
+@font-face {
+  font-family: 'Rawline';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src:
+    local(Rawline-500),
+    url('../fonts/Rawline-500.woff2') format('woff2'),
+    local(Rawline-500),
+    url('../fonts/Rawline-500.woff') format('woff');
+}
+
+/* Rawline 600  */
+
+@font-face {
+  font-family: 'Rawline';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src:
+    local(Rawline-600),
+    url('../fonts/Rawline-600.woff2') format('woff2'),
+    local(Rawline-600),
+    url('../fonts/Rawline-600.woff') format('woff');
+}

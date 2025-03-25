@@ -1,0 +1,128 @@
+<script setup lang="ts">
+import { onMounted, ref } from 'vue';
+import { formFields2, initialFormValues2 } from '@/data/data.ts';
+import FormGenerator from '@/components/FormGenerator.vue';
+import type { IFormValues } from '@/types/types.ts';
+import { getType } from '@/helpers/getType.ts';
+
+const initialFormValues = ref<IFormValues>(initialFormValues2);
+const formFields = ref(formFields2);
+
+let initialValuesCopy: IFormValues;
+
+onMounted(() => {
+  initialValuesCopy = JSON.parse(JSON.stringify(initialFormValues.value));
+});
+
+const submitForm = (formValues: IFormValues) => {
+  console.log('submit:', formValues);
+};
+
+const cancelForm = () => {
+  initialFormValues.value = JSON.parse(JSON.stringify(initialValuesCopy));
+  console.log('cancel');
+};
+</script>
+
+//попытка сделать динамический рендер. без label было бы проще
+<template>
+  <section class="page-3">
+    <router-link class="link" to="/">⬅&#32;Назад</router-link>
+    <div class="page-3__form">
+      <h1 class="page-3__title">Cообщить о проблеме повторно</h1>
+      <FormGenerator
+        :fields="formFields"
+        v-model="initialFormValues"
+        @submit="submitForm"
+        @cancel="cancelForm"
+      >
+        <template v-for="(field, key) in formFields" :key="key" #[key]>
+          <component
+            :is="getType(field.type)"
+            v-model="initialFormValues[key]"
+            :placeholder="field.attributes?.placeholder"
+            class="page-3__input"
+            v-bind="field.attributes"
+            v-if="field.type !== 'textarea'"
+            :type="field.attributes?.type"
+          >
+            <template v-if="field.type === 'select'">
+              <option v-for="option in field.options" :key="option.value" :value="option.value">
+                {{ option.label }}
+              </option>
+            </template>
+          </component>
+
+          <textarea
+            v-if="field.type === 'textarea'"
+            v-model="initialFormValues[key]"
+            class="page-3__input page-3__input_type-textarea"
+            :rows="field.attributes?.rows"
+            :maxlength="field.attributes?.maxlength"
+          ></textarea>
+        </template>
+      </FormGenerator>
+    </div>
+  </section>
+</template>
+
+<style scoped lang="scss">
+.page-3 {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-height: 100vh;
+  align-items: center;
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #fff;
+    padding: 50px;
+    width: 470px;
+    border: 1px solid #292929;
+  }
+
+  &__title {
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    margin-bottom: 40px;
+    text-align: center;
+    color: #000;
+  }
+
+  &__input {
+    padding: 7px 2px;
+    border-radius: 6px;
+    align-items: center;
+    border: 1px solid #f5f5f5;
+    background-color: #f5f5f5;
+    outline: transparent;
+    width: 100%;
+
+    &_type-textarea {
+      resize: none;
+    }
+  }
+
+  &__label {
+    color: #f5f5f5;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: normal;
+    white-space: nowrap;
+  }
+
+  :deep(.form-generator__btn) {
+    background-color: #000;
+    color: #fff;
+  }
+  :deep(.form-generator__btn_type-cancel) {
+    background-color: #f5f5f5;
+    color: #000;
+  }
+}
+</style>
