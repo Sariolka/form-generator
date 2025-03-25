@@ -22,5 +22,6 @@ declare module 'vue-router/auto-routes' {
     '/form1': RouteRecordInfo<'/form1', '/form1', Record<never, never>, Record<never, never>>,
     '/form2': RouteRecordInfo<'/form2', '/form2', Record<never, never>, Record<never, never>>,
     '/form3': RouteRecordInfo<'/form3', '/form3', Record<never, never>, Record<never, never>>,
+    '/form4': RouteRecordInfo<'/form4', '/form4', Record<never, never>, Record<never, never>>,
   }
 }

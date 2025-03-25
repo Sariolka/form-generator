@@ -3,6 +3,7 @@ import { onMounted, ref } from 'vue';
 import { formFields2, initialFormValues2 } from '@/data/data.ts';
 import FormGenerator from '@/components/FormGenerator.vue';
 import type { IFormValues } from '@/types/types.ts';
+import { getType } from '@/helpers/getType.ts';
 
 const initialFormValues = ref<IFormValues>(initialFormValues2);
 const formFields = ref(formFields2);
@@ -23,64 +24,42 @@ const cancelForm = () => {
 };
 </script>
 
-//попыталась сделать динамический рендер, но не вышло...
+//попытка сделать динамический рендер. без label было бы проще
 <template>
   <section class="page-3">
     <router-link class="link" to="/">⬅&#32;Назад</router-link>
     <div class="page-3__form">
-      <h1 class="page-3__title">Cообщить о проблеме</h1>
+      <h1 class="page-3__title">Cообщить о проблеме повторно</h1>
       <FormGenerator
         :fields="formFields"
         v-model="initialFormValues"
         @submit="submitForm"
         @cancel="cancelForm"
       >
-        <template #name-label>
-          <label class="page-3__label">Ваше имя</label>
-        </template>
-        <template #name="{ field }">
-          <input
-            v-model="initialFormValues.name"
-            :type="field.attributes?.type"
-            class="page-3__input"
-          />
-        </template>
-        <template #phone-label>
-          <label class="page-3__label">Ваш номер</label>
-        </template>
-        <template #phone="{ field }">
-          <input
-            v-model="initialFormValues.phone"
-            :type="field.attributes?.phone"
-            class="page-3__input"
+        <template v-for="(field, key) in formFields" :key="key" #[key]>
+          <component
+            :is="getType(field.type)"
+            v-model="initialFormValues[key]"
             :placeholder="field.attributes?.placeholder"
-          />
-        </template>
-        <template #help-label>
-          <label class="page-3__label">Опишите проблему</label>
-        </template>
-        <template #help="{ field }">
-          <textarea
-            v-model="initialFormValues.help"
-            class="page-3__input page-3__input_type-textarea"
-            :rows="field.attributes?.rows"
-            :maxlength="field.attributes?.maxlength"
-          />
-        </template>
-        <template #select-label>
-          <label class="page-3__label">Выберите категорию ошибки</label>
-        </template>
-        <template #select="{ field }">
-          <div class="select-wrapper">
-            <select v-model="initialFormValues.select" class="page-3__input">
+            class="page-3__input"
+            v-bind="field.attributes"
+            v-if="field.type !== 'textarea'"
+            :type="field.attributes?.type"
+          >
+            <template v-if="field.type === 'select'">
               <option v-for="option in field.options" :key="option.value" :value="option.value">
                 {{ option.label }}
               </option>
-            </select>
-          </div>
-        </template>
-        <template #subscribe-label>
-          <label class="page-3__label">Согласен с обработкой данных</label>
+            </template>
+          </component>
+
+          <textarea
+            v-if="field.type === 'textarea'"
+            v-model="initialFormValues[key]"
+            class="page-3__input page-3__input_type-textarea"
+            :rows="field.attributes?.rows"
+            :maxlength="field.attributes?.maxlength"
+          ></textarea>
         </template>
       </FormGenerator>
     </div>
@@ -99,10 +78,10 @@ const cancelForm = () => {
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color: #153042;
-    width: 450px;
-    padding: 50px 50px 30px 50px;
-    border-radius: 10px;
+    background-color: #fff;
+    padding: 50px;
+    width: 470px;
+    border: 1px solid #292929;
   }
 
   &__title {
@@ -111,16 +90,18 @@ const cancelForm = () => {
     font-weight: 600;
     line-height: normal;
     margin-bottom: 40px;
-    color: #f5f5f5;
+    text-align: center;
+    color: #000;
   }
 
   &__input {
-    padding: 7px 30px 7px 10px;
+    padding: 7px 2px;
     border-radius: 6px;
     align-items: center;
-    border: 1px solid #f1f8ff;
-    background-color: #f1f8ff;
+    border: 1px solid #f5f5f5;
+    background-color: #f5f5f5;
     outline: transparent;
+    width: 100%;
 
     &_type-textarea {
       resize: none;
@@ -136,8 +117,12 @@ const cancelForm = () => {
   }
 
   :deep(.form-generator__btn) {
-    background-color: #f1f8ff;
-    color: #020617;
+    background-color: #000;
+    color: #fff;
+  }
+  :deep(.form-generator__btn_type-cancel) {
+    background-color: #f5f5f5;
+    color: #000;
   }
 }
 </style>
