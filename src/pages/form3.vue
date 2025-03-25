@@ -23,7 +23,6 @@ const handleCancel = () => {
 };
 </script>
 
-//попыталась сделать динамический рендер, но не вышло...
 <template>
   <section class="page-3">
     <router-link class="link" to="/">⬅&#32;Назад</router-link>
@@ -35,8 +34,8 @@ const handleCancel = () => {
         @submit="handleSubmit"
         @cancel="handleCancel"
       >
-        <template #name-label>
-          <label class="page-3__label">Ваше имя</label>
+        <template #name-label="{ field }">
+          <label class="page-3__label">{{field.label}}</label>
         </template>
         <template #name="{ field }">
           <input
@@ -45,8 +44,8 @@ const handleCancel = () => {
             class="page-3__input"
           />
         </template>
-        <template #phone-label>
-          <label class="page-3__label">Ваш номер</label>
+        <template #phone-label="{ field }">
+          <label class="page-3__label">{{field.label}}</label>
         </template>
         <template #phone="{ field }">
           <input
@@ -56,8 +55,8 @@ const handleCancel = () => {
             :placeholder="field.attributes?.placeholder"
           />
         </template>
-        <template #help-label>
-          <label class="page-3__label">Опишите проблему</label>
+        <template #help-label="{ field }">
+          <label class="page-3__label">{{field.label}}</label>
         </template>
         <template #help="{ field }">
           <textarea
@@ -67,8 +66,8 @@ const handleCancel = () => {
             :maxlength="field.attributes?.maxlength"
           />
         </template>
-        <template #select-label>
-          <label class="page-3__label">Выберите категорию ошибки</label>
+        <template #select-label="{ field }">
+          <label class="page-3__label">{{field.label}}</label>
         </template>
         <template #select="{ field }">
           <div class="select-wrapper">
@@ -79,8 +78,8 @@ const handleCancel = () => {
             </select>
           </div>
         </template>
-        <template #subscribe-label>
-          <label class="page-3__label">Согласен с обработкой данных</label>
+        <template #subscribe-label="{ field }">
+          <label class="page-3__label">{{field.label}}</label>
         </template>
       </FormGenerator>
     </div>
