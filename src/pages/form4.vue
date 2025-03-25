@@ -37,6 +37,7 @@ const handleCancel = () => {
         @cancel="handleCancel"
       >
         <template v-for="(field, key) in formFields" :key="key" #[key]>
+          <!-- Можно стилизовать селект, тогда тоже делать условие и обертку -->
           <component
             :is="getType(field.type)"
             v-model="initialFormValues[key]"
@@ -45,6 +46,7 @@ const handleCancel = () => {
             v-bind="field.attributes"
             v-if="field.type !== 'textarea'"
             :type="field.attributes?.type"
+            :value="initialFormValues[key]"
           >
             <template v-if="field.type === 'select'">
               <option v-for="option in field.options" :key="option.value" :value="option.value">
