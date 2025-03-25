@@ -4,6 +4,7 @@ import { formFields2, initialFormValues2 } from '@/data/data.ts';
 import FormGenerator from '@/components/FormGenerator.vue';
 import type { IFormValues } from '@/types/types.ts';
 import { getType } from '@/helpers/getType.ts';
+import { cancelForm, submitForm } from '@/helpers/formHandlers.ts'
 
 const initialFormValues = ref<IFormValues>(initialFormValues2);
 const formFields = ref(formFields2);
@@ -14,13 +15,12 @@ onMounted(() => {
   initialValuesCopy = JSON.parse(JSON.stringify(initialFormValues.value));
 });
 
-const submitForm = (formValues: IFormValues) => {
-  console.log('submit:', formValues);
+const handleSubmit = (formValues: IFormValues) => {
+  submitForm(formValues);
 };
 
-const cancelForm = () => {
-  initialFormValues.value = JSON.parse(JSON.stringify(initialValuesCopy));
-  console.log('cancel');
+const handleCancel = () => {
+  cancelForm(initialFormValues, initialValuesCopy);
 };
 </script>
 
@@ -33,8 +33,8 @@ const cancelForm = () => {
       <FormGenerator
         :fields="formFields"
         v-model="initialFormValues"
-        @submit="submitForm"
-        @cancel="cancelForm"
+        @submit="handleSubmit"
+        @cancel="handleCancel"
       >
         <template v-for="(field, key) in formFields" :key="key" #[key]>
           <component

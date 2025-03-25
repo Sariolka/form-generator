@@ -3,6 +3,7 @@ import { formFields1, initialFormValues1 } from '@/data/data.ts';
 import FormGenerator from '@/components/FormGenerator.vue';
 import type { IFormValues } from '@/types/types.ts';
 import { onMounted, ref } from 'vue';
+import { cancelForm, submitForm } from '@/helpers/formHandlers.ts'
 
 const initialFormValues = ref<IFormValues>(initialFormValues1);
 const formFields = ref(formFields1);
@@ -12,13 +13,13 @@ let initialValuesCopy: IFormValues;
 onMounted(() => {
   initialValuesCopy = JSON.parse(JSON.stringify(initialFormValues.value));
 });
-const submitForm = (formValues: IFormValues) => {
-  console.log('submit:', formValues);
+
+const handleSubmit = (formValues: IFormValues) => {
+  submitForm(formValues);
 };
 
-const cancelForm = () => {
-  initialFormValues.value = JSON.parse(JSON.stringify(initialValuesCopy));
-  console.log('cancel');
+const handleCancel = () => {
+  cancelForm(initialFormValues, initialValuesCopy);
 };
 </script>
 
@@ -28,8 +29,8 @@ const cancelForm = () => {
     <FormGenerator
       :fields="formFields"
       v-model="initialFormValues"
-      @submit="submitForm"
-      @cancel="cancelForm"
+      @submit="handleSubmit"
+      @cancel="handleCancel"
     >
       <template #subscribe-label>
         <label class="page__label">Подписаться на рассылку</label>
