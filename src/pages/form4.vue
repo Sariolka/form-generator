@@ -52,7 +52,6 @@ const handleCancel = () => {
               </option>
             </template>
           </component>
-
           <textarea
             v-if="field.type === 'textarea'"
             v-model="initialFormValues[key]"

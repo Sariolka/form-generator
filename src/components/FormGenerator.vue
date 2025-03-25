@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { IFormProps, IFormValues } from '@/types/types.ts';
-import { useSlots } from 'vue';
+import {  useSlots } from 'vue'
 import { getType } from '@/helpers/getType.ts';
 const slots = useSlots();
 
@@ -34,7 +34,7 @@ const updateValue = (key: string, value: any) => {
       class="form-generator__field"
       :class="{ 'form-generator__field_type-checkbox': value.attributes?.type === 'checkbox' }"
     >
-      <slot :name="`${key}-label`">
+      <slot :name="`${key}-label`" :field="value">
         <label class="form-generator__label" :for="key">{{ value.label }}</label>
       </slot>
       <slot :name="key" :field="value" :value="modelValue[key]" />
@@ -47,8 +47,8 @@ const updateValue = (key: string, value: any) => {
           }"
           :is="getType(value.type)"
           :id="key"
-          :value="props.modelValue[key]"
-          :checked="value.attributes?.type === 'checkbox' ? props.modelValue[key] : ''"
+          :value="modelValue[key]"
+          :checked="value.attributes?.type === 'checkbox' ? modelValue[key] : ''"
           @input="
             (event: any) =>
               updateValue(
@@ -58,14 +58,15 @@ const updateValue = (key: string, value: any) => {
           "
           v-bind="value.attributes"
           :type="value.attributes?.type"
-      /></template>
+        /></template>
       <template v-else>
+        <!--Обертка для стилизации селекта -->
         <div class="select-wrapper" v-if="!slots[key]">
           <component
             class="form-generator__base-input"
             :is="getType(value.type)"
             :id="key"
-            :value="props.modelValue[key]"
+            :value="modelValue[key]"
             @input="(event: any) => updateValue(key, event.target.value)"
             v-bind="value.attributes"
           >

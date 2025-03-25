@@ -32,8 +32,8 @@ const handleCancel = () => {
       @submit="handleSubmit"
       @cancel="handleCancel"
     >
-      <template #subscribe-label>
-        <label class="page__label">Подписаться на рассылку</label>
+      <template #subscribe-label="{ field }">
+        <label class="page__label">{{field.label}}</label>
       </template>
       <template #subscribe="{ field }">
         <input
