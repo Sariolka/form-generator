@@ -180,6 +180,6 @@ export const initialFormValues3 = {
   email: '',
   phone: '',
   address: '',
-  country: 'ru',
+  country: 'fr',
   terms: false,
 };
