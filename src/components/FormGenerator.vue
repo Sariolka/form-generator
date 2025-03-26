@@ -48,7 +48,6 @@ const updateValue = (key: string, value: any) => {
           }"
           :is="getType(value.type)"
           :id="key"
-          :value="modelValue[key]"
           :checked="value.attributes?.type === 'checkbox' ? modelValue[key] : undefined"
           @input="
             (event: any) =>

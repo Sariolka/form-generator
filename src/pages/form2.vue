@@ -2,7 +2,7 @@
 import { formFields3, initialFormValues3 } from '@/data/data.ts';
 import FormGenerator from '@/components/FormGenerator.vue';
 import type { IFormValues } from '@/types/types.ts';
-import { computed, onMounted, ref } from 'vue'
+import { onMounted, ref } from 'vue';
 import { cancelForm, submitForm } from '@/helpers/formHandlers.ts'
 
 const initialFormValues = ref<IFormValues>(initialFormValues3);
@@ -21,11 +21,6 @@ const handleSubmit = (formValues: IFormValues) => {
 const handleCancel = () => {
   cancelForm(initialFormValues, initialValuesCopy);
 };
-const filterAttributes = computed(() => {
-  return Object.fromEntries(
-    Object.entries(formFields.value.attributes || {}).filter(([_, value]) => value !== "")
-  );
-});
 </script>
 
 <template>
@@ -37,7 +32,7 @@ const filterAttributes = computed(() => {
         :fields="formFields"
         v-model="initialFormValues"
         @submit="handleSubmit"
-        v-bind="filterAttributes"
+        v-bind="formFields?.attributes"
         @cancel="handleCancel"
       >
       </FormGenerator>
