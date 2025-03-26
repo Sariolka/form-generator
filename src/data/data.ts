@@ -7,7 +7,6 @@ export const formFields1 = ref<IFormProps>({
     label: 'Имя',
     attributes: {
       type: 'text',
-      required: true,
     },
   },
   email: {
@@ -15,7 +14,6 @@ export const formFields1 = ref<IFormProps>({
     label: 'Email',
     attributes: {
       type: 'email',
-      required: true,
     },
   },
 
@@ -52,15 +50,13 @@ export const formFields2 = ref<IFormProps>({
     label: 'Ваше имя',
     attributes: {
       type: 'text',
-      required: true,
     },
   },
   phone: {
     type: 'input',
     label: 'Контактный номер',
     attributes: {
-      type: 'text',
-      required: true,
+      type: 'tel',
       placeholder: '+7(999)999-99-99',
     },
   },
@@ -80,7 +76,6 @@ export const formFields2 = ref<IFormProps>({
     label: 'Опишите проблему',
     attributes: {
       type: 'textarea',
-      required: true,
       rows: 7,
       maxlength: 400,
     },
@@ -108,7 +103,6 @@ export const formFields3 = ref<IFormProps>({
     label: 'Имя',
     attributes: {
       type: 'text',
-      required: true,
       placeholder: 'Введите ваше имя',
     },
   },
@@ -117,7 +111,6 @@ export const formFields3 = ref<IFormProps>({
     label: 'Фамилия',
     attributes: {
       type: 'text',
-      required: true,
       placeholder: 'Введите вашу фамилию',
     },
   },
@@ -126,7 +119,6 @@ export const formFields3 = ref<IFormProps>({
     label: 'Ваш Email',
     attributes: {
       type: 'email',
-      required: true,
       placeholder: 'example@domain.com',
     },
   },
@@ -135,7 +127,6 @@ export const formFields3 = ref<IFormProps>({
     label: 'Телефон',
     attributes: {
       type: 'tel',
-      required: true,
       placeholder: '+7 (999) 999-99-99',
     },
   },
@@ -144,7 +135,6 @@ export const formFields3 = ref<IFormProps>({
     label: 'Адрес',
     attributes: {
       type: 'text',
-      required: true,
       placeholder: 'Улица, дом, квартира',
     },
   },
@@ -170,7 +160,6 @@ export const formFields3 = ref<IFormProps>({
     label: 'Согласен с условиями использования',
     attributes: {
       type: 'checkbox',
-      required: true,
     },
   },
 });

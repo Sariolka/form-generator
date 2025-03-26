@@ -22,6 +22,7 @@ const handleCancel = () => {
 };
 
 const updateValue = (key: string, value: any) => {
+  console.log({ ...props.modelValue, [key]: value })
   emit('update:modelValue', { ...props.modelValue, [key]: value });
 };
 </script>
@@ -48,7 +49,7 @@ const updateValue = (key: string, value: any) => {
           :is="getType(value.type)"
           :id="key"
           :value="modelValue[key]"
-          :checked="value.attributes?.type === 'checkbox' ? modelValue[key] : ''"
+          :checked="value.attributes?.type === 'checkbox' ? modelValue[key] : undefined"
           @input="
             (event: any) =>
               updateValue(
