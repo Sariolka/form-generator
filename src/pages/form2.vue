@@ -32,6 +32,7 @@ const handleCancel = () => {
         :fields="formFields"
         v-model="initialFormValues"
         @submit="handleSubmit"
+        v-bind="formFields?.attributes"
         @cancel="handleCancel"
       >
       </FormGenerator>
