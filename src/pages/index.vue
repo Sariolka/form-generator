@@ -5,6 +5,9 @@
     <router-link class="nav__link" to="/form1">Пример 1</router-link>
     <router-link class="nav__link" to="/form2">Пример 2</router-link>
     <router-link class="nav__link" to="/form3">Пример 3</router-link>
+    <router-link class="nav__link" to="/form4"
+      >Пример 4</router-link
+    >
   </nav>
 </template>
 

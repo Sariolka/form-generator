@@ -35,7 +35,7 @@ const updateValue = (key: string, value: any) => {
       class="form-generator__field"
       :class="{ 'form-generator__field_type-checkbox': value.attributes?.type === 'checkbox' }"
     >
-      <slot :name="`${key}-label`" :field="value">
+      <slot :name="`${key}-label`" :field="value" >
         <label class="form-generator__label" :for="key">{{ value.label }}</label>
       </slot>
       <slot :name="key" :field="value" :value="modelValue[key]" />
