@@ -90,9 +90,9 @@ export const formFields2 = ref<IFormProps>({
 });
 
 export const initialFormValues2 = {
-  name: '',
+  name: '!',
   phone: '',
-  help: '',
+  help: '!!',
   subscribe: false,
   select: 'unknown',
 };

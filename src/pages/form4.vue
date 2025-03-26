@@ -22,9 +22,14 @@ const handleSubmit = (formValues: IFormValues) => {
 const handleCancel = () => {
   cancelForm(initialFormValues, initialValuesCopy);
 };
+
+const updateValue = (key: string, value: any) => {
+  initialFormValues.value = { ...initialFormValues.value, [key]: value };
+};
+
 </script>
 
-//попытка сделать динамический рендер. НЕ ПЕРЕДАЮТСЯ ЗНАЧЕНИЯ
+//попытка сделать динамический рендер
 <template>
   <section class="page-3">
     <router-link class="link" to="/">⬅&#32;Назад</router-link>
@@ -40,7 +45,7 @@ const handleCancel = () => {
           <!-- Можно стилизовать селект, тогда тоже делать условие и обертку -->
           <component
             :is="getType(field.type)"
-            v-model="initialFormValues[key]"
+
             :placeholder="field.attributes?.placeholder"
             class="page-3__input"
             v-bind="field.attributes"
@@ -49,6 +54,14 @@ const handleCancel = () => {
             :class="{'page-3__input_type-textarea': field.type === 'textarea'}"
             :type="field.attributes?.type"
             :value="initialFormValues[key]"
+            :checked="field.attributes?.type === 'checkbox' ? initialFormValues[key] : undefined"
+            @input="
+            (event: any) =>
+              updateValue(
+                key + '',
+                field.attributes?.type === 'checkbox' ? event.target.checked : event.target.value,
+              )
+          "
           >
             <template v-if="field.type === 'select'">
               <option v-for="option in field.options" :key="option.value" :value="option.value">
