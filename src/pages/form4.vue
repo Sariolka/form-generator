@@ -24,7 +24,7 @@ const handleCancel = () => {
 };
 </script>
 
-//попытка сделать динамический рендер. без label было бы проще
+//попытка сделать динамический рендер. НЕ ПЕРЕДАЮТСЯ ЗНАЧЕНИЯ
 <template>
   <section class="page-3">
     <router-link class="link" to="/">⬅&#32;Назад</router-link>
@@ -40,13 +40,15 @@ const handleCancel = () => {
           <!-- Можно стилизовать селект, тогда тоже делать условие и обертку -->
           <component
             :is="getType(field.type)"
-            v-model="initialFormValues.key"
+            v-model="initialFormValues[key]"
             :placeholder="field.attributes?.placeholder"
             class="page-3__input"
             v-bind="field.attributes"
-
+            :rows="field.attributes?.rows || undefined"
+            :maxlength="field.attributes?.maxlength || undefined"
+            :class="{'page-3__input_type-textarea': field.type === 'textarea'}"
             :type="field.attributes?.type"
-            :value="initialFormValues.key"
+            :value="initialFormValues[key]"
           >
             <template v-if="field.type === 'select'">
               <option v-for="option in field.options" :key="option.value" :value="option.value">
@@ -54,13 +56,6 @@ const handleCancel = () => {
               </option>
             </template>
           </component>
-<!--          <textarea-->
-<!--            v-if="field.type === 'textarea'"-->
-<!--            v-model="initialFormValues[key]"-->
-<!--            class="page-3__input page-3__input_type-textarea"-->
-<!--            :rows="field.attributes?.rows"-->
-<!--            :maxlength="field.attributes?.maxlength"-->
-<!--          ></textarea>-->
         </template>
       </FormGenerator>
     </div>
